@@ -19,14 +19,16 @@ function hideEl(selector) {
     throw new Error("Already hidden")
   }
 
-  selector().style.display="none"
+  el.style.display="none"
 }
 
 function hideElAsync(selector) {
   try {
+    console.log(selector)
     hideEl(selector)
   } catch {
     const interval = setInterval(()=>{
+      console.log(selector)
       try {
         hideEl(selector);
         clearInterval(interval);
@@ -36,16 +38,22 @@ function hideElAsync(selector) {
 }
 
 function hideElements() {
-  const navEls = ()=>document.querySelectorAll('[tabindex="-1"] span.html-span');
+  hideElAsync(
+    ()=>document.querySelector('[tabindex="-1"]:first-of-type > div > div > div > div:nth-of-type(1)')
+  ) // Logo
 
-  hideElAsync(()=>navEls()[0]) // Logo
-  hideElAsync(()=>navEls()[1]) // Home
-  hideElAsync(()=>navEls()[2]) // Search
-  hideElAsync(()=>navEls()[3]) // Explore
-  hideElAsync(()=>navEls()[4]) // Reels
-  hideElAsync(()=>navEls()[7]) // Create
-  hideElAsync(()=>navEls()[8]) // Profile
-  hideElAsync(()=>navEls()[9]) // Threads
+  const navEls = ()=>document.querySelectorAll('[tabindex="-1"]:first-of-type > div > div > div > div:nth-of-type(2) span.html-span');
+  hideElAsync(()=>navEls()[0]) // Home
+  hideElAsync(()=>navEls()[1]) // Search
+  hideElAsync(()=>navEls()[2]) // Explore
+  hideElAsync(()=>navEls()[3]) // Reels
+  hideElAsync(()=>navEls()[6]) // Create
+  hideElAsync(()=>navEls()[7]) // Profile
+
+
+  hideElAsync(()=>
+    document.querySelectorAll('[tabindex="-1"]:first-of-type > div > div > div > div:nth-of-type(3) span.html-span')[0]
+  ) // Threads
 
   hideElAsync(()=>document.querySelector('[data-pagelet="IGDThreadList"] :first-child')) // Notes
 }
